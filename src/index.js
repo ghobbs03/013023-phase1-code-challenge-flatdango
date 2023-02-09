@@ -7,19 +7,22 @@ fetch('http://localhost:3000/films')
 
 function renderFilms(films) {
     films.forEach(film => {
+        const ulFilmElement = document.getElementById('films');
+        const liElement = document.createElement('li');
+        liElement.textContent = film.title.toUpperCase();
+        liElement.id = film.id;
+        liElement.className = "film-item";
+        ulFilmElement.append(liElement);
+
+
         renderFilm(film)
     });
 }
 
 
 function renderFilm(film) {
-    const ulFilmElement = document.getElementById('films');
-    const liElement = document.createElement('li');
-    liElement.textContent = film.title.toUpperCase();
-    liElement.id = film.title;
-    liElement.className = "film-item";
-    ulFilmElement.append(liElement);
 
+    const liElement = document.getElementById(film.id)
 
     const title = document.getElementById('title');
     title.textContent = film.title;
@@ -47,12 +50,12 @@ function renderFilm(film) {
 
     liElement.addEventListener('click', () => {
         fetch(`http://localhost:3000/films/${film.id}`)
-        .then(resp => resp.json())
-        .then((newFilmData) => {
-            renderFilm(newFilmData) 
-        })
-        
-    
+            .then(resp => resp.json())
+            .then((newFilmData) => {
+                renderFilm(newFilmData)
+            })
+
+
     })
 
 }
@@ -61,7 +64,7 @@ function renderFilm(film) {
 
 
 function decrementAvailableTickets(film) {
-   
+
     if ((film.capacity - film.tickets_sold) > 0) {
         film.tickets_sold++;
 
