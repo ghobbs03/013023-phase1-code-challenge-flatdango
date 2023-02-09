@@ -2,7 +2,13 @@
 
 fetch('http://localhost:3000/films')
     .then(resp => resp.json())
-    .then(renderFilms)
+    .then(films => {
+        
+        renderFilms(films);
+        renderFilm(films[0]);
+        
+        })
+
 
 
 function renderFilms(films) {
@@ -14,10 +20,13 @@ function renderFilms(films) {
         liElement.className = "film-item";
         ulFilmElement.append(liElement);
 
-
         renderFilm(film)
+        
     });
+
 }
+
+
 
 
 function renderFilm(film) {
